@@ -2,7 +2,8 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
-require('./routes.js')(app);
+var fourChanService = require('./services/fourChanService.js');
+require('./routes.js')(app, fourChanService);
 
 app.set('port', process.env.PORT || 80);
 app.set('views', './views');

@@ -4,8 +4,15 @@
   "description": "A clone client of 4Chan website where the app display all categories and threads but you can makr threads in order to be monitored by the server side application to be downloading the images of marked threads.",
   "main": "app.js",
   "dependencies": {
+    "cheerio": "^0.19.0",
     "express": "^4.13.3",
-    "jade": "^1.11.0"
+    "htmlparser": "^1.7.7",
+    "jade": "^1.11.0",
+    "noodlejs": "^0.3.2",
+    "osmosis": "0.0.8",
+    "request": "^2.64.0",
+    "soupselect": "^0.2.0",
+    "x-ray": "^2.0.2"
   },
   "devDependencies": {},
   "scripts": {

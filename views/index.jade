@@ -4,3 +4,8 @@ block content
 	div.jumbotron.text-center
 		h1 4Chan Monitor
 		p This gonna be awsome!!
+
+	div
+		each category in categories
+			div
+				a(href='#{category.link}') #{category.name}
