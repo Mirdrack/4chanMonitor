@@ -17,4 +17,15 @@ module.exports = function (app, fourChanService) {
 			res.render('board.jade', { name : boardName, threads : data });
 		});
 	});
+
+	app.get('/thread/:section/:id/:surl', function (req, res) {
+
+		var section = req.params.section;
+		var id = req.params.id;
+		var surl = req.params.surl;
+		fourChanService.getThread(section, id, surl, function (data) {
+
+			res.render('thread.jade');
+		});
+	});
 };

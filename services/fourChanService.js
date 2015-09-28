@@ -89,14 +89,9 @@ var fourChanService = {
 		  	}) 
 		.data(function (results) {
 
-		    /*
-		    for(var cont = 0, categories = [], element = {}; cont < results.categories.length; cont++) {
-
-		    	element.name = results.categories[cont];
-		    	element.link = results.links[cont];
-		    	categories.push(element);
-		    	element = {};
-		    }
+			/*  
+				We trim the results for the script with the catalog data
+			 	and the we parse the catalog variable to json
 			*/
 			results.threads.splice(3, 5);
 			results.threads.splice(0, 2);
@@ -108,37 +103,101 @@ var fourChanService = {
 			info = info.substring(0, info.length - 5);
 			info = JSON.parse(info.toString());
 		    
-		    /*console.log('===COUNT=======');
-		    console.log(info.count);
-
-		    
-		    console.log('=====ORDER=====');
-		    console.log(info.order.alt);*/
-
+			/*
+				The next lines take an ordenation method
+				create a single thread object and push it
+				to the threads array
+			 */		   
 		    var thread = {};
 		    var threads = [];
 		    for (cont = 0; cont < info.count; cont++) {
 
-		    	id = info.order.alt[cont];
+		    	id = info.order.alt[cont]; // alt is the ordenation method
 		    	thread = info.threads[id];
-		    	thread.id = id;
+		    	// we push the id cause jade template engine 
+		    	// cannot access to the object keys
+		    	thread.id = id; 
 		    	threads.push(thread);
 		    }
-
-		    /*console.log('====THREADS======');
-		    console.log(threads);
-
-
-			// Dummy data
-			threads = [
-				{ name : 'Thread 1', link: 'url' },
-				{ name : 'Thread 2', link: 'url' }
-			];*/
+		    // After all, we call the callback
 			callback(threads);
 		});
+	},
+
+	getThread : function(boardName, id, surl, callback) {
+
+		var self = this; // Saving the reference to the main object
+		// Proccess to scrap
+		var osmosis = require('osmosis');
+		var url = 'http://boards.4chan.org/' + boardName + '/thread/' + id + '/' + surl;
+		osmosis.get(url)
+		.set({
+			'resources': ['a.fileThumb @href']
+		}) 
+		.data(function (results) {
+
+			var resources = results.resources;
+			for(var cont = 0; cont < resources.length; cont++)
+			{
+				var url = 'http:' + resources[cont];
+				
+				// We set the name for file
+				var filename = resources[cont].split('/');
+				filename = filename[filename.length - 1];
+
+				// We set the full path '.files/boardName/semanticURL/filename'
+				var path = './files/' + boardName + '/' + surl + '/' +filename;
+
+				console.log(url + '::' + path);
+
+				// We download the file
+				self.dowloadResource(url, boardName, surl, path, function () {
+					console.log('File downloaded');
+				});
+				
+				/*
+				self.dowloadResource(url, path, function () {
+					console.log('Dowload completed');
+				});*/
+			}
+		    // After all, we call the callback
+			callback(resources);
+		});
+
+		
+
+	},
+
+	dowloadResource: function (uri, boardName, surl, filename, callback) {
+
+		// We gonna save the files so we setup the required libraries
+		var request = require('request');
+		var fs = require('fs');
 
 
+		// We check for the directories and we create them if they dont exists
+		var boardDirectory = './files/' + boardName
+		var surlDirectory = './files/' + boardName + '/' + surl;
+		if ( !fs.existsSync(boardDirectory) ) {
+		    
+		    fs.mkdirSync(boardDirectory);
+		    if( !fs.existsSync(surlDirectory) ) {
+		    	
+		    	fs.mkdirSync(surlDirectory);
+		    }
+		}
+
+		// We download the file
+		console.log('=== Dowloading::' + uri );
+		request.head(uri, function(err, res, body) {
+			// console.log('content-type:', res.headers['content-type']);
+			// console.log('content-length:', res.headers['content-length']);
+			request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+		});
 	}
+
+
+
 };
 
 module.exports = fourChanService;
