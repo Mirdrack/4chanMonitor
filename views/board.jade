@@ -1,0 +1,23 @@
+extends layouts/default
+
+block stylesheets
+	link(rel='stylesheet', href='/css/board.css')
+
+block content
+	div.row
+		div.col-md-12
+			h2 Boards #{name}
+		
+	div.row
+	each thread in threads
+		div.col-md-2
+			div.thread
+				div.thumb
+					a(href='http://boards.4chan.org/#{name}/thread/#{thread.id}/#{thread.semantic_url}')
+						img(src='http://i.4cdn.org/#{name}/#{thread.imgurl}s.jpg' class="img-responsive")
+				div.description 
+					if thread.sub.length > 0
+						small.sub !{thread.sub} : 
+					small.teaser !{thread.teaser}
+
+					

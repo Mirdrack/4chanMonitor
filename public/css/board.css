@@ -1,0 +1,22 @@
+img 
+{
+	max-height: 150px;
+}
+
+.thread 
+{
+	max-height: 250px;
+	min-height: 250px;
+	margin-bottom: 20px;
+}
+
+.description {
+	max-height: 100px;
+	 overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sub 
+{
+	font-weight: bold;
+}

@@ -1,11 +1,156 @@
 extends layouts/default
 		
 block content
-	div.jumbotron.text-center
-		h1 4Chan Monitor
-		p This gonna be awsome!!
-
-	div
-		each category in categories
-			div
-				a(href='#{category.link}') #{category.name}
+	.row
+		.col-md-11.col-md-offset-1
+			h2 Boards
+	.row
+		.col-md-2.col-md-offset-1
+			h3(style='text-decoration: underline; display: inline;') Japanese Culture
+			ul
+				li
+					a.boardlink(title='Anime & Manga', href='board/a') Anime & Manga
+				li
+					a.boardlink(title='Anime/Cute', href='board/c') Anime/Cute
+				li
+					a.boardlink(title='Anime/Wallpapers', href='board/w') Anime/Wallpapers
+				li
+					a.boardlink(title='Mecha', href='board/m') Mecha
+				li
+					a.boardlink(title='Cosplay & EGL', href='board/cgl') Cosplay & EGL
+				li
+					a.boardlink(title='Cute/Male', href='board/cm') Cute/Male
+				li
+					a.boardlink(title='Flash', href='board/f') Flash
+				li
+					a.boardlink(title='Transportation', href='board/n') Transportation
+				li
+					a.boardlink(title='Otaku Culture', href='board/jp') Otaku Culture
+				li
+					a.boardlink(title='Pokémon', href='board/vp') Pokémon
+		.col-md-2
+			h3(style='text-decoration: underline; display: inline;') Interests
+			ul
+				li
+					a.boardlink(title='Video Games', href='board/v') Video Games
+				li
+					a.boardlink(title='Video Game Generals', href='board/vg') Video Game Generals
+				li
+					a.boardlink(title='Retro Games', href='board/vr') Retro Games
+				li
+					a.boardlink(title='Comics & Cartoons', href='board/co') Comics & Cartoons
+				li
+					a.boardlink(title='Technology', href='board/g') Technology
+				li
+					a.boardlink(title='Television & Film', href='board/tv') Television & Film
+				li
+					a.boardlink(title='Weapons', href='board/k') Weapons
+				li
+					a.boardlink(title='Auto', href='board/o') Auto
+				li
+					a.boardlink(title='Animals & Nature', href='board/an') Animals & Nature
+				li
+					a.boardlink(title='Traditional Games', href='board/tg') Traditional Games
+				li
+					a.boardlink(title='Sports', href='board/sp') Sports
+				li
+					a.boardlink(title='Alternative Sports', href='board/asp') Alternative Sports
+				li
+					a.boardlink(title='Science & Math', href='board/sci') Science & Math
+				li
+					a.boardlink(title='International', href='board/int') International
+				li
+					a.boardlink(title='Outdoors', href='board/out') Outdoors
+				li
+					a.boardlink(title='Toys', href='board/toy') Toys
+				li
+					a.boardlink(title='Business & Finance', href='board/biz') Business & Finance
+		.col-md-2
+			h3(style='text-decoration: underline; display: inline;') Creative
+			ul
+				li
+						a.boardlink(title='Oekaki', href='board/i') Oekaki
+				li
+						a.boardlink(title='Papercraft & Origami', href='board/po') Papercraft & Origami
+				li
+						a.boardlink(title='Photography', href='board/p') Photography
+				li
+						a.boardlink(title='Food & Cooking', href='board/ck') Food & Cooking
+				li
+						a.boardlink(title='Artwork/Critique', href='board/ic') Artwork/Critique
+				li
+						a.boardlink(title='Wallpapers/General', href='board/wg') Wallpapers/General
+				li
+						a.boardlink(title='Music', href='board/mu') Music
+				li
+						a.boardlink(title='Fashion', href='board/fa') Fashion
+				li
+						a.boardlink(title='3DCG', href='board/3') 3DCG
+				li
+						a.boardlink(title='Graphic Design', href='board/gd') Graphic Design
+				li
+						a.boardlink(title='Do-It-Yourself', href='board/diy') Do-It-Yourself
+				li
+						a.boardlink(title='Worksafe GIF', href='board/wsg') Worksafe GIF
+		.col-md-2
+			h3(style='text-decoration: underline; display: inline;') Other
+			ul
+				li
+						a.boardlink(title='Travel', href='board/trv') Travel
+				li
+						a.boardlink(title='Fitness', href='board/fit') Fitness
+				li
+						a.boardlink(title='Paranormal', href='board/x') Paranormal
+				li
+						a.boardlink(title='Literature', href='board/lit') Literature
+				li
+						a.boardlink(title='Advice', href='board/adv') Advice
+				li
+						a.boardlink(title='LGBT', href='board/lgbt') LGBT
+				li
+						a.boardlink(title='Pony', href='board/mlp') Pony
+			h3(style='text-decoration: underline; display: inline;') Misc.
+			h3(style='display: inline;')
+				span.warning(title='Not Safe For Work')
+					sup(style='vertical-align: text-bottom;') (NSFW)
+			ul
+				li
+					a.boardlink(title='Random', href='board/b') Random
+				li
+					a.boardlink(title='Request', href='board/r') Request
+				li
+					a.boardlink(title='ROBOT9001', href='board/r9k') ROBOT9001
+				li
+					a.boardlink(title='Politically Incorrect', href='board/pol') Politically Incorrect
+				li
+					a.boardlink(title='Cams & Meetups', href='board/soc') Cams & Meetups
+				li
+					a.boardlink(title='Shit 4chan Says', href='board/s4s') Shit 4chan Says
+		.col-md-2
+			h3(style='text-decoration: underline; display: inline;') Adult
+			h3(style='display: inline;')
+				span.warning(title='Not Safe For Work')
+				sup(style='vertical-align: text-bottom;') (NSFW)
+			ul
+				li
+						a.boardlink(title='Sexy Beautiful Women', href='board/s') Sexy Beautiful Women
+				li
+						a.boardlink(title='Hardcore', href='board/hc') Hardcore
+				li
+						a.boardlink(title='Handsome Men', href='board/hm') Handsome Men
+				li
+						a.boardlink(title='Hentai', href='board/h') Hentai
+				li
+						a.boardlink(title='Ecchi', href='board/e') Ecchi
+				li
+						a.boardlink(title='Yuri', href='board/u') Yuri
+				li
+						a.boardlink(title='Hentai/Alternative', href='board/d') Hentai/Alternative
+				li
+						a.boardlink(title='Yaoi', href='board/y') Yaoi
+				li
+						a.boardlink(title='Torrents', href='board/t') Torrents
+				li
+						a.boardlink(title='High Resolution', href='board/hr') High Resolution
+				li
+						a.boardlink(title='Adult GIF', href='board/gif') Adult GIF
