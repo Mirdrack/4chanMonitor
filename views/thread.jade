@@ -3,4 +3,7 @@ extends layouts/default
 block content
 	div.row
 		div.col-md-12
-			h2 hola!
+			h2 #{threadName}
+			ul
+				each resource in resources
+					li #{resource}

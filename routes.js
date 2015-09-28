@@ -2,10 +2,11 @@ module.exports = function (app, fourChanService) {
 
 	app.get('/', function (req, res) {
 		
-		fourChanService.getCategories(function (data) {
+		res.render('index.jade');
+		/*fourChanService.getCategories(function (data) {
 
 			res.render('index.jade', { categories : data });
-		}); 
+		}); */
 		
 	});
 
@@ -25,7 +26,7 @@ module.exports = function (app, fourChanService) {
 		var surl = req.params.surl;
 		fourChanService.getThread(section, id, surl, function (data) {
 
-			res.render('thread.jade');
+			res.render('thread.jade', { threadName : surl, resources : data });
 		});
 	});
 };
