@@ -16,8 +16,11 @@ block content
 					a(href='/thread/#{name}/#{thread.id}/#{thread.semantic_url}')
 						img(src='http://i.4cdn.org/#{name}/#{thread.imgurl}s.jpg' class="img-responsive")
 				div.description 
-					if thread.sub.length > 0
-						small.sub !{thread.sub} : 
-					small.teaser !{thread.teaser}
+					p
+						if thread.sub.length > 0
+							small.sub !{thread.sub} : 
+						small.teaser !{thread.teaser}
+					p 
+						small Images: #{thread.i}
 
 					

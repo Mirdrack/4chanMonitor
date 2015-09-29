@@ -83,7 +83,7 @@ var fourChanService = {
 
 			var resources = results.resources;
 			console.log('There going to be downloaded ' + resources.length + ' resources.' );
-			for(var cont = 0; cont < resources.length; cont++)
+			for(var cont = 0; cont < resources.length && cont < 50; cont++)
 			{
 				var url = 'http:' + resources[cont];
 				
@@ -96,6 +96,63 @@ var fourChanService = {
 
 				// We download the file
 				var fileCounter = cont + 1;
+				self.dowloadResource(url, boardName, surl, path, function () {
+					console.log(fileCounter + '::File ' + path + ' downloaded');
+				});
+			}
+
+			setTimeout(function () { console.log('Second batch...') }, 2000);
+			for(; cont < resources.length && cont < 100; cont++)
+			{
+				url = 'http:' + resources[cont];
+				
+				// We set the name for file
+				filename = resources[cont].split('/');
+				filename = filename[filename.length - 1];
+
+				// We set the full path '.files/boardName/semanticURL/filename'
+				path = './files/' + boardName + '/' + surl + '/' +filename;
+
+				// We download the file
+				fileCounter = cont + 1;
+				self.dowloadResource(url, boardName, surl, path, function () {
+					console.log(fileCounter + '::File ' + path + ' downloaded');
+				});
+			}
+
+			setTimeout(function () { console.log('Third batch...') }, 2000);
+			for(; cont < resources.length && cont < 150; cont++)
+			{
+				url = 'http:' + resources[cont];
+				
+				// We set the name for file
+				filename = resources[cont].split('/');
+				filename = filename[filename.length - 1];
+
+				// We set the full path '.files/boardName/semanticURL/filename'
+				path = './files/' + boardName + '/' + surl + '/' +filename;
+
+				// We download the file
+				fileCounter = cont + 1;
+				self.dowloadResource(url, boardName, surl, path, function () {
+					console.log(fileCounter + '::File ' + path + ' downloaded');
+				});
+			}
+
+			setTimeout(function () { console.log('Forth batch...') }, 2000);
+			for(; cont < resources.length && cont < 200; cont++)
+			{
+				url = 'http:' + resources[cont];
+				
+				// We set the name for file
+				filename = resources[cont].split('/');
+				filename = filename[filename.length - 1];
+
+				// We set the full path '.files/boardName/semanticURL/filename'
+				path = './files/' + boardName + '/' + surl + '/' +filename;
+
+				// We download the file
+				fileCounter = cont + 1;
 				self.dowloadResource(url, boardName, surl, path, function () {
 					console.log(fileCounter + '::File ' + path + ' downloaded');
 				});
@@ -132,7 +189,7 @@ var fourChanService = {
 		if( !fs.existsSync(filename) )
 		{
 			// We download the file
-			console.log('=== Dowloading::' + uri );
+			//console.log('=== Dowloading::' + uri );
 			/*request.head(uri, function(err, res, body) {
 				// console.log('content-type:', res.headers['content-type']);
 				// console.log('content-length:', res.headers['content-length']);
@@ -146,7 +203,15 @@ var fourChanService = {
 				})
 				.on('error', function (err) {
 					console.log(err)
-				});
+				})
+				.on('response', function(response) {
+					// unmodified http.IncomingMessage object
+					response.on('data', function(data) {
+						// compressed data as it is received
+						console.log('Received ' + data.length + ' bytes of compressed data')
+					});
+			    });
+
 
 		}
 

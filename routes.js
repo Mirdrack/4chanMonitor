@@ -29,4 +29,25 @@ module.exports = function (app, fourChanService) {
 			res.render('thread.jade', { threadName : surl, resources : data });
 		});
 	});
+
+	app.get('/test', function (req, res) {
+
+		var spawn = require('child_process').spawn,
+		ls    = spawn('python', ['./python/scrapper.py', 'cadena', 1, 'otraCadena']);
+
+		ls.stdout.on('data', function (data) {
+		  console.log('stdout: ' + data);
+		});
+
+		ls.stderr.on('data', function (data) {
+		  console.log('stderr: ' + data);
+		});
+
+		ls.on('close', function (code) {
+		  console.log('child process exited with code ' + code);
+		});
+
+		res.render('test.jade');
+
+	});
 };

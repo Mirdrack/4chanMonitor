@@ -21,3 +21,6 @@ The app will be pooling the selected threads, receiving the information comparin
 
 ## To do's
 Update this Read me with the steps to scrap the site
+
+### Palette
+http://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF
