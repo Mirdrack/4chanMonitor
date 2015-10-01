@@ -70,99 +70,31 @@ var fourChanService = {
 
 	getThread : function(boardName, id, surl, callback) {
 
-		var self = this; // Saving the reference to the main object
-		
-		// Proccess to scrap
-		var osmosis = require('osmosis');
+		// URL of the thread to download
 		var url = 'http://boards.4chan.org/' + boardName + '/thread/' + id + '/' + surl;
-		osmosis.get(url)
-		.set({
-			'resources': ['a.fileThumb @href']
-		}) 
-		.data(function (results) {
-
-			var resources = results.resources;
-			console.log('There going to be downloaded ' + resources.length + ' resources.' );
-			for(var cont = 0; cont < resources.length && cont < 50; cont++)
-			{
-				var url = 'http:' + resources[cont];
-				
-				// We set the name for file
-				var filename = resources[cont].split('/');
-				filename = filename[filename.length - 1];
-
-				// We set the full path '.files/boardName/semanticURL/filename'
-				var path = './files/' + boardName + '/' + surl + '/' +filename;
-
-				// We download the file
-				var fileCounter = cont + 1;
-				self.dowloadResource(url, boardName, surl, path, function () {
-					console.log(fileCounter + '::File ' + path + ' downloaded');
-				});
-			}
-
-			setTimeout(function () { console.log('Second batch...') }, 2000);
-			for(; cont < resources.length && cont < 100; cont++)
-			{
-				url = 'http:' + resources[cont];
-				
-				// We set the name for file
-				filename = resources[cont].split('/');
-				filename = filename[filename.length - 1];
-
-				// We set the full path '.files/boardName/semanticURL/filename'
-				path = './files/' + boardName + '/' + surl + '/' +filename;
-
-				// We download the file
-				fileCounter = cont + 1;
-				self.dowloadResource(url, boardName, surl, path, function () {
-					console.log(fileCounter + '::File ' + path + ' downloaded');
-				});
-			}
-
-			setTimeout(function () { console.log('Third batch...') }, 2000);
-			for(; cont < resources.length && cont < 150; cont++)
-			{
-				url = 'http:' + resources[cont];
-				
-				// We set the name for file
-				filename = resources[cont].split('/');
-				filename = filename[filename.length - 1];
-
-				// We set the full path '.files/boardName/semanticURL/filename'
-				path = './files/' + boardName + '/' + surl + '/' +filename;
-
-				// We download the file
-				fileCounter = cont + 1;
-				self.dowloadResource(url, boardName, surl, path, function () {
-					console.log(fileCounter + '::File ' + path + ' downloaded');
-				});
-			}
-
-			setTimeout(function () { console.log('Forth batch...') }, 2000);
-			for(; cont < resources.length && cont < 200; cont++)
-			{
-				url = 'http:' + resources[cont];
-				
-				// We set the name for file
-				filename = resources[cont].split('/');
-				filename = filename[filename.length - 1];
-
-				// We set the full path '.files/boardName/semanticURL/filename'
-				path = './files/' + boardName + '/' + surl + '/' +filename;
-
-				// We download the file
-				fileCounter = cont + 1;
-				self.dowloadResource(url, boardName, surl, path, function () {
-					console.log(fileCounter + '::File ' + path + ' downloaded');
-				});
-			}
-		    // After all, we call the callback
-			callback(resources);
+		// We prepare us to call python
+		var spawn = require('child_process').spawn;
+		var command = spawn('python', ['./python/scrapper.py', url]);
+		var output = '';
+		
+	    //Listening for the python information
+	    command.stdout.on('data', function (data) {
+			console.log(data);
+			output += data;
 		});
 
-		
+		command.stderr.on('data', function (data) {
+			console.log('stderr: ' + data);
+			output += data;
+		});
 
+		command.on('close', function (code) {
+			console.log('Child process exited with code ' + code);
+		});
+
+
+	    // After all, we call the callback
+		callback(output);
 	},
 
 	dowloadResource: function (uri, boardName, surl, filename, callback) {

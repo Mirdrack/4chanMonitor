@@ -26,24 +26,24 @@ module.exports = function (app, fourChanService) {
 		var surl = req.params.surl;
 		fourChanService.getThread(section, id, surl, function (data) {
 
-			res.render('thread.jade', { threadName : surl, resources : data });
+			res.render('thread.jade', { threadName : surl, pythonOutput : data });
 		});
 	});
 
 	app.get('/test', function (req, res) {
 
 		var spawn = require('child_process').spawn,
-		ls    = spawn('python', ['./python/scrapper.py', 'cadena', 1, 'otraCadena']);
+		command    = spawn('python', ['./python/scrapper.py', [1,2,3], 'http://algo.com']);
 
-		ls.stdout.on('data', function (data) {
+		command.stdout.on('data', function (data) {
 		  console.log('stdout: ' + data);
 		});
 
-		ls.stderr.on('data', function (data) {
+		command.stderr.on('data', function (data) {
 		  console.log('stderr: ' + data);
 		});
 
-		ls.on('close', function (code) {
+		command.on('close', function (code) {
 		  console.log('child process exited with code ' + code);
 		});
 
